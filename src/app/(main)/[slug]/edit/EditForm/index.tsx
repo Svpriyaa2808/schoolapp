@@ -30,10 +30,11 @@ const EditForm = ({postId,initialValues}:{postId:number,initialValues:Pick<Table
         <form onSubmit={handleSubmit(values => {
                                             let imageForm = undefined;
                                                     if(values.image?.length && typeof values.image !== 'string') {
+                                                            console.log("values",typeof values.image)
                                                             imageForm= new FormData()
                                                             imageForm.append('image',values.image[0]) 
                                                         }
-                                            mutate({postId, userdata:{title:values.title,content:values.content!}})})} className="flex flex-col mb-4">
+                                            mutate({postId, userdata:{title:values.title,content:values.content,image:imageForm}})})} className="flex flex-col mb-4">
            
             <fieldset className="m-4">
                 <label htmlFor="title">Post Title</label>
@@ -46,7 +47,7 @@ const EditForm = ({postId,initialValues}:{postId:number,initialValues:Pick<Table
             </fieldset>
 
              <fieldset className="m-4">
-                {initialValues.image && <img className="w-xl h-auto" src={initialValues.image} alt="post image" />}
+                {initialValues.image && <img className="w-2xl h-auto" src={initialValues.image} alt="post image" />}
                 <label htmlFor="image">Upload a new Image</label>
                 <input type="file" id="image" {...register("image")}></input>               
             </fieldset>
