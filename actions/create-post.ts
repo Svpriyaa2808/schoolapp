@@ -8,17 +8,18 @@ import { redirect } from "next/navigation"
 import { uploadImage } from "@/utils/supabase/upload-image"
 
 export const CreatePost = async (userdata:z.infer<typeof postSchema>) => {
+    console.log("Image Parameter",userdata.image)
+    
     const parsedData = postSchema.parse(userdata)
     const slug = slugify(parsedData.title)
+  
     const imageFile = userdata.image?.get("image")
-    console.log(imageFile)
+    console.log("image file",typeof imageFile)
 
-    if(typeof imageFile !== undefined) {
-         if(!(imageFile instanceof File) && imageFile !== null) {
+    if(!(imageFile instanceof File) && imageFile !== null) {
         throw new Error("malformed image File")
     }
-    }
-   
+    
     const publicImageUrl = imageFile instanceof File ? await uploadImage(imageFile) : null
 
     const supabase = await createClient()

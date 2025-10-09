@@ -26,7 +26,9 @@ const CreatePage = () => {
         <h4 className="font-bold text-3xl mb-4">Got something to say</h4>
         <form className="flex flex-col m-4 " onSubmit={handleSubmit(values =>{
                                                         let imageForm = new FormData();
-                                                        if(values.image) imageForm.append('image',values.image[0]) 
+                                                        if(values.image?.length) {
+                                                            imageForm.append('image',values.image[0]) 
+                                                        }
                                                         mutate({title:values.title,content:values.content,image:imageForm})
                                                         })}>
          
