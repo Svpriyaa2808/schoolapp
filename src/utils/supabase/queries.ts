@@ -11,7 +11,7 @@ export const  getHomePosts = async (supabase:ReturnType<typeof createClient>) =>
 export const getSinglePost = async (slug : string) => {
   const supabase = createClient()
   return await supabase.from('posts')
-                        .select('id,title,content,slug,user_id,users("username"),image')
+                        .select('id,title,content,slug,user_id,users("username"),image,comments("comment_section","commentor_name","slug","user_id",id)')
                         .eq('slug',slug)
                         .single()
 }
@@ -24,3 +24,4 @@ export const getSearchPost = async (searchTerm : string) => {
 }
 
 export type HomePostType = QueryData<ReturnType<typeof getHomePosts>>
+// export type CommentType = QueryData<ReturnType<typeof getSinglePost>>

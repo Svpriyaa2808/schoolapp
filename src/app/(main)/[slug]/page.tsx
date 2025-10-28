@@ -2,6 +2,8 @@ import { getSinglePost } from "@/utils/supabase/queries"
 import { createClient } from "@/utils/supabase/server-client"
 import DeleteButton from "./DeleteButton"
 import EditButton from "./EditButton"
+import Comments from "@/components/comments"
+import CommentSection from "@/components/comments/CommentSection"
 
 const singlePost =async ({params}:{params:{slug:string}}) => {
     const {slug} = await params
@@ -31,7 +33,18 @@ const singlePost =async ({params}:{params:{slug:string}}) => {
                 <DeleteButton postId={data.id}/>
                 <EditButton slug={slug}/>
             </div>
-            }       
+            }
+            {user && <CommentSection slug={slug} user_id={data.user_id} id={data.id}/>}
+
+           {data.comments && (
+  <Comments 
+    comments={data.comments} 
+    currentUserId={user?.id} 
+    postAuthorId={data.user_id} 
+    slug={slug}
+  />
+)}
+ 
             </>
            }
         </div>

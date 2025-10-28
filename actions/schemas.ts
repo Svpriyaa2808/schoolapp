@@ -16,6 +16,11 @@ export const signUpSchema = z.object({
 export const postSchema = z.object({
     title:z.string().min(3,"Title must have 3 characters"),
     content:z.string().optional(),
-    image:z.instanceof(FormData).optional()
+    image:z.instanceof(FormData).optional(),
+   
+})
+
+export const commentSchema = z.object({
+  comment_section: z.string().min(1, "Comment cannot be empty"),
 })
 
