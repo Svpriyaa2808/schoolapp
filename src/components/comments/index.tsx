@@ -67,7 +67,7 @@ const Comments = ({ comments, currentUserId, postAuthorId, slug }: CommentArray)
       <h4>Comments</h4>
       {comments.map((item,index) => 
 
-        <>
+        <div key={index}>
         
           {currentUserId === postAuthorId  ?
           <div key={index}>
@@ -92,7 +92,7 @@ const Comments = ({ comments, currentUserId, postAuthorId, slug }: CommentArray)
 
 
             
-        </>
+        </div>
 )}
     </div>
   )
