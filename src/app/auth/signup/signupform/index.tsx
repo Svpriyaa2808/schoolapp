@@ -11,37 +11,69 @@ const SignUpForm = () => {
         handleSubmit,
         formState: {errors}} = useForm({
         resolver: zodResolver(signUpSchema)
-    }) 
+    })
 
-    const {mutate,error} = useMutation({
+    const {mutate,isPending,error} = useMutation({
         mutationFn:SignUp
     })
 
     return(
         <>
-        <form onSubmit={handleSubmit(values => mutate(values))} className="flex flex-col m-auto">
-         
-            <fieldset className="m-2">
-                <label htmlFor="email">Enter your email</label>
-                <input id="email" className="ml-2 bg-gray-300 rounded-2xl p-2 " {...register("email")} placeholder="enter your email id"/>
+        <form onSubmit={handleSubmit(values => mutate(values))} className="space-y-5">
+
+            <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email Address
+                </label>
+                <input
+                    id="email"
+                    type="email"
+                    className="input-field"
+                    {...register("email")}
+                    placeholder="Enter your email"
+                    disabled={isPending}
+                />
                 {errors.email && <ErrorMessage message={errors.email.message!} />}
-            </fieldset>
+            </div>
 
-            <fieldset className="m-2">
-                <label htmlFor="username">Enter your name</label>
-                <input id="username" {...register("username")} className="ml-2 bg-gray-300 rounded-2xl p-2 " placeholder="enter your user name"/>
+            <div>
+                <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Username
+                </label>
+                <input
+                    id="username"
+                    {...register("username")}
+                    className="input-field"
+                    placeholder="Choose a username"
+                    disabled={isPending}
+                />
                 {errors.username && <ErrorMessage message={errors.username.message!} />}
-            </fieldset>
+            </div>
 
-              <fieldset>
-                <label htmlFor="password">Enter your password</label>
-                <input id="password" type="password" {...register("password")} className="ml-2  bg-gray-300 rounded-2xl p-2 " placeholder="enter your password id"/>
+            <div>
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Password
+                </label>
+                <input
+                    id="password"
+                    type="password"
+                    {...register("password")}
+                    className="input-field"
+                    placeholder="Create a password"
+                    disabled={isPending}
+                />
                 {errors.password && <ErrorMessage message={errors.password.message!} />}
-            </fieldset>
+            </div>
 
-            <button className="button-secondary w-2/4">Sign Up !</button>
+            <button
+                type="submit"
+                className="button-secondary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isPending}
+            >
+                {isPending ? "Creating Account..." : "Sign Up"}
+            </button>
         </form>
-        
+
         </>
     )
 }
